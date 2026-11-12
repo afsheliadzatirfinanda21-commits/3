@@ -24,7 +24,7 @@ jobs:
 
       - name: Compile C++
         shell: msys2 {0}
-        run: g++ -std=c++17 struk.cpp -o struk.exe -static -static-libgcc -static-libstdc++
+        run: g++ -x c++ -std=c++17 struk -o struk.exe -static -static-libgcc -static-libstdc++
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
