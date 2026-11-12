@@ -1,0 +1,33 @@
+
+name: Build EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MinGW
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-gcc
+
+      - name: Compile C++
+        shell: msys2 {0}
+        run: g++ -std=c++17 struk.cpp -o struk.exe -static -static-libgcc -static-libstdc++
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: struk-exe
+          path: struk.exe
